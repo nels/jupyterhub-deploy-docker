@@ -16,6 +16,11 @@ x-network-common: &network-common
 x-build-args-common: &build-args-common
   <<: *network-common
 
+x-hub-volume: &hub-volume
+  type: volume
+  source: hub-data
+  target: /data
+
 services:
   hub:
     build:
@@ -25,8 +30,8 @@ services:
         JUPYTERHUB_VERSION: latest
         <<: *build-args-common
     restart: always
-    image: jupyterhub
-    container_name: jupyterhub
+    #image: jupyterhub
+    container_name: hub
     networks:
       - datastudio-net
     volumes:
@@ -36,7 +41,7 @@ services:
       # within the container
       - "/var/run/docker.sock:/var/run/docker.sock:rw"
       # Bind Docker volume on host for JupyterHub database and cookie secrets
-      - "jupyterhub-data:/data"
+      - *hub-volume
     ports:
       - "8000:8000"
     environment:
@@ -51,7 +56,8 @@ services:
       #DOCKER_NOTEBOOK_DIR: /home/jovyan/work
 
 volumes:
-  jupyterhub-data:
+  hub-data:
+      name: hub-data
 
 networks:
   datastudio-net:
