@@ -48,7 +48,7 @@ services:
       # DOCKER_NOTEBOOK_IMAGE: quay.io/jupyter/base-notebook:latest
       DOCKER_NOTEBOOK_IMAGE: ghcr.io/safehr-data/datastudio-user:20241111
       # Notebook directory inside user image
-      DOCKER_NOTEBOOK_DIR: /home/jovyan/work
+      #DOCKER_NOTEBOOK_DIR: /home/jovyan/work
 
 volumes:
   jupyterhub-data:
