@@ -2,7 +2,19 @@
 # Distributed under the terms of the Modified BSD License.
 
 # JupyterHub docker compose configuration file
-version: "3"
+x-http-proxy: &http-proxy ${HTTP_PROXY}
+x-https-proxy: &https-proxy ${HTTPS_PROXY}
+x-no-proxy: &no-proxy localhost,127.0.0.1,uclvlddpragae05,admin.datastudio,nginx.datastudio,rstudio.xuclh.nhs.uk,rstudio.datastudio,jupyterhub.xuclh.nhs.uk,jupyterhub.datastudio,gitlab.xuclh.nhs.uk,gitlab.datastudio
+x-network-common: &network-common
+  HTTP_PROXY: *http-proxy
+  http_proxy: *http-proxy
+  HTTPS_PROXY: *https-proxy
+  https_proxy: *https-proxy
+  NO_PROXY: *no-proxy
+  no_proxy: *no-proxy
+
+x-build-args-common: &build-args-common
+  <<: *network-common
 
 services:
   hub:
@@ -11,6 +23,7 @@ services:
       dockerfile: Dockerfile.jupyterhub
       args:
         JUPYTERHUB_VERSION: latest
+        <<: *build-args-common
     restart: always
     image: jupyterhub
     container_name: jupyterhub
