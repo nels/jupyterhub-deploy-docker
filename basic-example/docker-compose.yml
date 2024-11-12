@@ -28,7 +28,7 @@ services:
     image: jupyterhub
     container_name: jupyterhub
     networks:
-      - jupyterhub-network
+      - datastudio-net
     volumes:
       # The JupyterHub configuration file
       - "./jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py:ro"
@@ -43,7 +43,7 @@ services:
       # This username will be a JupyterHub admin
       JUPYTERHUB_ADMIN: admin
       # All containers will join this network
-      DOCKER_NETWORK_NAME: jupyterhub-network
+      DOCKER_NETWORK_NAME: datastudio-net
       # JupyterHub will spawn this Notebook image for users
       # DOCKER_NOTEBOOK_IMAGE: quay.io/jupyter/base-notebook:latest
       DOCKER_NOTEBOOK_IMAGE: ghcr.io/safehr-data/datastudio-user:20241111
@@ -54,5 +54,5 @@ volumes:
   jupyterhub-data:
 
 networks:
-  jupyterhub-network:
-    name: jupyterhub-network
+  datastudio-net:
+      name: datastudio-net
